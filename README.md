@@ -2,7 +2,7 @@
 A Brainf*ck compiler, written in C++
 
 
-- [ ] Lexical Analysis
+- [x] Lexical Analysis
 
 - [ ] Syntax Analysis
 

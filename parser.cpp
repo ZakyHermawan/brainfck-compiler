@@ -13,7 +13,7 @@ TokVect tokens;
 Stack::Stack(TokVect& tv) {
   m_idx_top = 0;
   m_token = std::move(tv);
-  // buang EOF dan newline terakhir
+  // remove EOF and newline at the end 
   m_token.pop_back();
   m_token.pop_back();
   m_token.push_back(tok_dollar);
@@ -27,7 +27,6 @@ void Stack::init_parsing() {
   ++m_idx_top;
 }
 
-// Top-Down parser (without PushDown Automata)
 void Stack::start_parsing () {
   init_parsing();
   int tok_idx = 0;
@@ -90,9 +89,9 @@ void Stack::start_parsing () {
       continue;
     }
     // Finish condition
-    // karena F->epsilon terdefinisi pada M[F, $]
-    // untuk M parse table
-    // jika kondisi akhir stack: $F, maka selesai
+    // because F->epsilon defined on pada M[F, $]
+    // for M parse table
+    // If thr last condition is: $F, the string is accepted
     else if(top == 'F' && tok_idx == m_token.size()-1) {
       pop();
       top = peek();
@@ -107,10 +106,6 @@ void Stack::start_parsing () {
     std::string s = parse_table[mp(top, f)];
     printf("Hasil produksi CFG: %s\n", s.c_str());
     
-    // rule: jika ada reduksi, maka reduksi
-    // harusnya jad state machine!
-    // jika top stack == input string
-    // SELESAI yey
     printf("\n");
     if(s.compare("D -> ><+-.,") == 0) {      
       pop();
@@ -174,9 +169,9 @@ void Stack::push(char c) {
 }
 
 void Stack::pop() {
-  // use exception
   if(m_idx_top == -1) {
     printf("Stack is empty!");
+    return;  
   }
   m_stack.pop_back();
   --m_idx_top;

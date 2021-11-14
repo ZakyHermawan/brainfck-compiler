@@ -1,5 +1,5 @@
 main:
-	clang++ scanner.cpp -o bfc.exe
+	clang++ scanner.cpp parser.cpp -o bfc.exe
 
 clean:
 	rm *.exe

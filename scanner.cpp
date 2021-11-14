@@ -7,6 +7,12 @@
 #include <vector>
 #include <fstream>
 
+
+void logErr(const char* errMsg, int row, int col) {
+  fprintf(stderr, "Error at %d %d\n%s\n", row, col, errMsg);
+  return;
+}
+
 void Source::readFile(std::string& fileName) {
   m_curr_line = m_curr_pos = 0;
   
@@ -73,9 +79,10 @@ void Source::printVector() {
 }
 
 bool knownChar(char c) {
+  //  c == '\n' diubah jadi unknown
   if(
     c == '[' || c == ']' || c == '>' || c == '<' ||
-    c == '+' || c == '-' || c == ',' || c == '.' || c == '\n'
+    c == '+' || c == '-' || c == ',' || c == '.' 
   ) {
     return true;
   }
@@ -102,24 +109,4 @@ int getToken(Source& src) {
     default: return tok_eof;
   }
   
-}
-
-int main(int argc, char* argv[]) {
-  if(argc != 2) {
-    fprintf(stderr, "Usage: bfc <filename>");
-    return -1;
-  }
-
-  std::string fileName(argv[1]);
-  Source src(fileName);
-
-  // test scanner
-  while(1) {
-    int val = getToken(src);
-    printf("%d", val);
-    
-    if(!val) return 0;
-  }
-
-  return 0;
 }

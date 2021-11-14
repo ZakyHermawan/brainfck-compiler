@@ -1,0 +1,24 @@
+Kita akan membuat predictive parser
+D  -> >|<|+|-|.|,
+E  -> D F
+E  -> [ E ] F
+F -> E
+F -> epsilon 
+
+First(D) = {'>','<','+','-','.',','}
+First(E -> D F) = {'>','<','+','-','.',','}
+First(E -> [ E ] F) = {'['}
+First(F -> E) = {'>', '<', '+', '-', '.', ',', '['}
+First(F -> epsilon) = {epsilon}
+
+Follow(D) = { anything }
+Follow(E) = Follow(F) = {']'}
+
+    |  ><+-.,  |   [    |    ]   | $
+---+----------+--------+---------+
+D | D -> ><+-., |        |         |
+E |  E -> D F   | E -> [E]F |         |
+F|    F -> E     |   F-> E    | F-> epsilon | F->Epsilon
+---+----------+--------+---------+
+
+

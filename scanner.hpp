@@ -13,7 +13,8 @@ enum Token {
   tok_plus,
   tok_min,
   tok_com,
-  tok_dot
+  tok_dot,
+  tok_dollar
 };
 
 class Source {
@@ -47,5 +48,4 @@ public:
 
 bool knownChar(char c);
 int getToken(Source& src);
-
-// void readToVector(std::vector<std::string>& lines,const std::string& fileName);
+void logErr(std::string& errMsg, int row=0, int col=0);

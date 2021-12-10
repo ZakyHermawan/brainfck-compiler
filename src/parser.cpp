@@ -7,12 +7,11 @@
 #define mp std::make_pair
 using Key = std::pair<char, Tok>;
 using PTable = std::map<Key, std::string>;
-PTable parse_table;
-TokVect tokens;
+// PTable parse_table;
 
 Stack::Stack(TokVect& tv) {
   m_idx_top = 0;
-  m_token = std::move(tv);
+  m_token = tv;
   // remove EOF and newline at the end 
   m_token.pop_back();
   m_token.pop_back();
@@ -27,7 +26,7 @@ void Stack::init_parsing() {
   ++m_idx_top;
 }
 
-void Stack::start_parsing () {
+void Stack::start_parsing (PTable& parse_table) {
   init_parsing();
   int tok_idx = 0;
   int ctr = 0;
@@ -195,7 +194,7 @@ F|    F -> E     |   F-> E    | F-> epsilon |
 */
 
 // we use F for E'
-void construct_table() {
+void construct_table(PTable& parse_table) {
   parse_table[mp('D', tok_gt)] = "D -> ><+-.,";
   parse_table[mp('D', tok_lt)] = "D -> ><+-.,";
   parse_table[mp('D', tok_plus)] = "D -> ><+-.,";
@@ -223,34 +222,4 @@ void construct_table() {
   parse_table[mp('F', tok_clSquare)] = "F -> epsilon";
 }
 
-int main(int argc, char* argv[]) {
-  if(argc != 2) {
-    fprintf(stderr, "Usage: bfc <filename>");
-    return -1;
-  }
 
-  std::string fileName(argv[1]);
-  Source src(fileName);
-
-  // Lexical Analysis
-  while(1) {
-    int val = getToken(src);
-    // printf("%d", val);
-    tokens.push_back(val);
-    
-    if(!val) break;
-  }
-  // test scanner
-  for(const auto& v: tokens) {
-      printf("%d", v);
-  }
-  printf("\n");
-
-  
-  Stack s(tokens);
-  construct_table();  
-  s.start_parsing();
-  
-  printf("Analisis sintaks selesai\n");
-  return 0;
-}

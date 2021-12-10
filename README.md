@@ -6,6 +6,6 @@ A Brainf*ck compiler, written in C++
 
 - [x] Syntax Analysis
 
-- [ ] Semantic Analysiss
+- [x] Semantic Analysis
 
 - [ ] Code Generation

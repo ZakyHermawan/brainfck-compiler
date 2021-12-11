@@ -148,6 +148,7 @@ void Stack::start_parsing (PTable& parse_table) {
     }
     else {
       printf("Wrong Syntax\n");
+      exit(-1);
       return;    
     }
 

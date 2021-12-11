@@ -26,6 +26,8 @@ void Source::readFile(std::string& fileName) {
   
   char c;
   std::vector<char> buf;
+  // to handle eof at the end of file
+  buf.push_back('\n');
   
   while(src >> std::noskipws >> c) {
     buf.push_back(c);

@@ -17,7 +17,6 @@ Stack::Stack(TokVect& tv) {
   m_token.pop_back();
   m_token.push_back(tok_dollar);
   
-  printf("\n%d %d\n", m_token[0], m_token[5]);
 }
 
 void Stack::init_parsing() {
@@ -35,56 +34,46 @@ void Stack::start_parsing (PTable& parse_table) {
     char top = peek();
     Tok f = m_token[tok_idx];
 
-    printf("Token: %d\n", f);
-    printf("Top stack: %c\n", top);
-    printStack();    
+
     
     if(top == '+' && f == tok_plus) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == '-' && f == tok_min) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == '[' && f == tok_opSquare) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == ']' && f == tok_clSquare) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == '<' && f == tok_lt) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == '>' && f == tok_gt) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == ',' && f == tok_com) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     else if(top == '.' && f == tok_dot) {
       pop();
       ++tok_idx;
-      printf("Token match, next!\n");
       continue;
     }
     // Finish condition
@@ -94,8 +83,6 @@ void Stack::start_parsing (PTable& parse_table) {
     else if(top == 'F' && tok_idx == m_token.size()-1) {
       pop();
       top = peek();
-      printf("%c\n", top);
-      printf("Accepted!\n");
       return;
     }
     
@@ -103,9 +90,7 @@ void Stack::start_parsing (PTable& parse_table) {
     
     
     std::string s = parse_table[mp(top, f)];
-    printf("Hasil produksi CFG: %s\n", s.c_str());
     
-    printf("\n");
     if(s.compare("D -> ><+-.,") == 0) {      
       pop();
       if(f == tok_plus) {
@@ -147,15 +132,12 @@ void Stack::start_parsing (PTable& parse_table) {
       pop();
     }
     else {
-      printf("Wrong Syntax\n");
       exit(-1);
       return;    
     }
 
-    printf("%s\n", s.c_str());
     
   }
-  printf("Selesai\n");
   return;
 }
 
@@ -170,7 +152,6 @@ void Stack::push(char c) {
 
 void Stack::pop() {
   if(m_idx_top == -1) {
-    printf("Stack is empty!");
     return;  
   }
   m_stack.pop_back();
@@ -178,7 +159,6 @@ void Stack::pop() {
 }
 
 void Stack::printStack() {
-  printf("Kondisi stack: ");
   for(const auto& stack: m_stack) {
     printf("%c", stack);
   }

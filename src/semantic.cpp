@@ -34,15 +34,16 @@ int main(int argc, char* argv[]) {
     if(!val) break;
   }
   // test scanner
+  /*
   for(const auto& v: tokens) {
       printf("%d", v);
   }
   printf("\n");
+  */
 
   Stack s(tokens);
   construct_table(parse_table);
   s.start_parsing(parse_table);
-  printf("Begin context checking\n");
   context_check(symbol_table, tokens);
   
   printf("Analisis Selesai\n");
